@@ -48,3 +48,4 @@ python -m cli.guard --query "SELECT * FROM big_table" --output json
 - Frontend: HTML, CSS, JS (vanilla)
 - База данных: PostgreSQL
 - Интеграция: REST API
+- Аналитика: Chart.js
