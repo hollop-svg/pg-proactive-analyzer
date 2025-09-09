@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>SQL Guardian - Query Analyzer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    body {
+      display: flex;
+      background: #e2e9f4;
+      color: #333;
+    }
+
+    .container {
+      display: flex;
+      width: 90%;
+    }
+
+    .menu {
+      width: 220px;
+      background: #1e293b;
+      color: #fff;
+      min-height: 100vh;
+      padding: 20px;
+      position: fixed;
+    }
+    .menu nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    .menu nav li {
+      margin-bottom: 10px;
+      border-radius: 6px;
+    }
+    .menu nav li a {
+      display: block;
+      color: #fff;
+      padding: 12px 10px;
+      text-decoration: none;
+    }
+    .menu nav li.active a {
+      background: #334155;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(151, 145, 145, 0.51);
+    }
+    .main {
+      margin-left: 250px;
+      padding: 20px;
+      flex-grow: 1;
+    }
+
+    header h1 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
+
+    header p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    /* Query Box */
+    .query-box {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    /* DB Connect Section */
+    .db-connect {
+      margin-bottom: 20px;
+    }
+
+    /* Модальное окно */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0; top: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+    }
+
+    .modal-content {
+      background: #fff;
+      width: 400px;
+      margin: 10% auto;
+      padding: 20px;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 15px;
+    }
+
+    .modal-content label {
+      display: block;
+      margin: 8px 0 4px;
+    }
+
+    .modal-content input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    .close {
+      position: absolute;
+      right: 15px;
+      top: 10px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Секция анализа */
+    .analysis-section {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .query-text {
+      background: #f8f9fa;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: monospace;
+      margin-bottom: 15px;
+      white-space: pre-wrap;
+      border-left: 4px solid #2563eb;
+    }
+
+    .timestamp {
+      color: #666;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    /* Метрики */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .metric-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+    }
+
+    .metric-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #374151;
+    }
+
+    .metric-value {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2563eb;
+      margin-bottom: 5px;
+    }
+
+    .metric-unit {
+      font-size: 16px;
+      font-weight: normal;
+      color: #6b7280;
+    }
+
+    .metric-description {
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 10px;
+    }
+
+    /* Рекомендации */
+    .advice-list {
+      margin-bottom: 25px;
+    }
+
+    .advice-item {
+      border-left: 4px solid;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: #f9fafb;
+      border-radius: 6px;
+    }
+
+    .advice-item.high {
+      border-color: #ef4444;
+    }
+
+    .advice-item.medium {
+      border-color: #f59e0b;
+    }
+
+    .advice-item.low {
+      border-color: #22c55e;
+    }
+
+    .advice-priority {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .priority-high {
+      background: #fef2f2;
+      color: #dc2626;
+    }
+
+    .priority-medium {
+      background: #fffbeb;
+      color: #d97706;
+    }
+
+    .priority-low {
+      background: #f0fdf4;
+      color: #16a34a;
+    }
+
+    .advice-item strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+    }
+
+    .advice-item p {
+      margin-bottom: 10px;
+    }
+
+    .advice-item code {
+      display: block;
+      background: #e2e8f0;
+      padding: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+      margin-top: 10px;
+      white-space: pre-wrap;
+    }
+
+    /* Сводные данные */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 15px;
+      background: #f8f9fa;
+      border-radius: 6px;
+    }
+
+    .summary-label {
+      font-weight: 600;
+      color: #374151;
+    }
+
+    .summary-value {
+      font-weight: bold;
+      color: #2563eb;
+    }
+
+    /* Статус сообщения */
+    .status-message {
+      padding: 12px 15px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+    }
+
+    .status-loading {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .status-success {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    /* Индикатор загрузки */
+    .loading {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-right: 5px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Цветовое кодирование метрик */
+    .good {
+      color: #16a34a;
+    }
+
+    .medium {
+      color: #d97706;
+    }
+
+    .bad {
+      color: #dc2626;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="menu" id="menu"></div>
+    <script src ="menu-loader.js"></script>
+
+    <div class="main">
+      <header>
+        <h1>SQL Query Analyzer</h1>
+        <p>Analyze and optimize your PostgreSQL queries before execution</p>
+      </header>
+
+      <section class="db-connect">
+        <button id="dbConnectBtn" class="btn-primary">Подключиться к БД</button>
+      </section>
+
+      <!-- Модалка -->
+      <div id="dbModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h3>Подключение к БД</h3>
+          <form id="dbForm">
+            <label>HOST</label>
+            <input type="text" name="host" required>
+            <label>NAME</label>
+            <input type="text" name="dbname" required>
+            <label>USER</label>
+            <input type="text" name="user" required>
+            <label>PASSWORD</label>
+            <input type="password" name="password" required>
+            <label>PORT</label>
+            <input type="text" name="port" value="5432" required>
+            <button type="submit" class="btn-primary">Проверить подключение</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Query box -->
+      <section class="query-box">
+        <textarea id="sqlQuery" placeholder="Введите SQL-запрос..."></textarea>
+        <button id="analyzeBtn" class="btn-primary">Проанализировать</button>
+      </section>
+
+      <!-- Статус сообщение -->
+      <div id="statusMessage" class="status-message hidden"></div>
+
+      <!-- Результат анализа -->
+      <section id="analysisResult" class="analysis-section hidden">
+        <h2>Результаты анализа запроса</h2>
+        <div id="queryOutput" class="query-text"></div>
+        <div id="timestamp" class="timestamp"></div>
+        
+        <h3>Основные метрики производительности</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-title">Стоимость выполнения</div>
+            <div id="costValue" class="metric-value">0 <span class="metric-unit">усл. ед.</span></div>
+            <div class="metric-description">Общая стоимость выполнения запроса согласно планировщику PostgreSQL</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">Ожидаемое количество строк</div>
+            <div id="rowsValue" class="metric-value">0 <span class="metric-unit">строк</span></div>
+            <div class="metric-description">Примерное количество строк, которое вернет запрос</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">Попадание в кэш</div>
+            <div id="cacheValue" class="metric-value">0 <span class="metric-unit">%</span></div>
+            <div class="metric-description">Процент попаданий в кэш буфера</div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-title">Использование индексов</div>
+            <div id="indexValue" class="metric-value">0 <span class="metric-unit">%</span></div>
+            <div class="metric-description">Эффективность использования индексов</div>
+          </div>
+        </div>
+        
+        <h3>Рекомендации по оптимизации</h3>
+        <div id="adviceContainer" class="advice-list">
+          <!-- Рекомендации будут добавлены здесь динамически -->
+        </div>
+        
+        <h3>Дополнительные метрики</h3>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="summary-label">Время ожидания:</span>
+            <span id="waitTimeValue" class="summary-value">0 мс</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Операции чтения:</span>
+            <span id="ioReadValue" class="summary-value">0 блоков</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Размер БД:</span>
+            <span id="dbSizeValue" class="summary-value">0 МБ</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Активные подключения:</span>
+            <span id="connectionsValue" class="summary-value">0</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Время работы СУБД:</span>
+            <span id="uptimeValue" class="summary-value">0 сек</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Задержка репликации:</span>
+            <span id="replicationLagValue" class="summary-value">0 мс</span>
+          </div>
+        </div>
+        
+        <h3>Информация о блокировках</h3>
+        <div class="summary-grid">
+          <div class="summary-item">
+            <span class="summary-label">Всего блокировок:</span>
+            <span id="totalLocksValue" class="summary-value">0</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Заблокированные транзакции:</span>
+            <span id="blockedCountValue" class="summary-value">0</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Долгие блокировки:</span>
+            <span id="longLocksValue" class="summary-value">0</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Взаимные блокировки:</span>
+            <span id="deadlocksValue" class="summary-value">0</span>
+          </div>
+        </div>
+
+        <h3>Заблокированные таблицы</h3>
+        <div id="blockedTablesContainer">
+          <!-- Информация о заблокированных таблицах будет здесь -->
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("dbModal");
+    const btn = document.getElementById("dbConnectBtn");
+    const span = document.querySelector(".close");
+    const form = document.getElementById("dbForm");
+
+    // открыть модалку
+    btn.onclick = () => modal.style.display = "block";
+    // закрыть
+    span.onclick = () => modal.style.display = "none";
+    window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+
+    // отправка формы (подключение к БД)
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = Object.fromEntries(new FormData(form));
+      try {
+        const res = await fetch("http://192.168.1.47:8000/check_connection", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData)
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.status === "ok") {
+          btn.textContent = `Подключено к ${formData.dbname} `;
+          btn.style.background = "#16a34a";
+        } else {
+          btn.textContent = "Ошибка подключения";
+          btn.style.background = "#ef4444";
+        }
+
+        modal.style.display = "none";
+      } catch (err) {
+        btn.textContent = "Ошибка сети";
+        btn.style.background = "#ef4444";
+        modal.style.display = "none";
+      }
+    });
+
+    // ====== Анализ запроса ======
+    // Элементы DOM
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    const sqlQuery = document.getElementById('sqlQuery');
+    const analysisResult = document.getElementById('analysisResult');
+    const statusMessage = document.getElementById('statusMessage');
+    
+    // Функция для форматирования чисел
+    function formatNumber(num) {
+      if (num === null || num === undefined) return '0';
+      return new Intl.NumberFormat('ru-RU').format(num);
+    }
+
+    // Функция для форматирования размера БД
+    function formatDatabaseSize(bytes) {
+      if (!bytes) return '0 МБ';
+      const megabytes = bytes / (1024 * 1024);
+      return `${formatNumber(megabytes.toFixed(2))} МБ`;
+    }
+
+    // Функция для форматирования времени
+    function formatUptime(seconds) {
+      if (!seconds) return '0 сек';
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = Math.floor(seconds % 60);
+      
+      if (hours > 0) {
+        return `${hours} ч ${minutes} мин ${secs} сек`;
+      } else if (minutes > 0) {
+        return `${minutes} мин ${secs} сек`;
+      } else {
+        return `${secs} сек`;
+      }
+    }
+
+    // Функция для отображения данных
+    function displayData(data) {
+      // Показываем секцию с результатами
+      analysisResult.classList.remove('hidden');
+      
+      // Отображаем запрос и дату
+      document.getElementById('queryOutput').textContent = data.query;
+      document.getElementById('timestamp').textContent = `Дата анализа: ${new Date(data.date).toLocaleString('ru-RU')}`;
+      
+      // Основные метрики
+      document.getElementById('costValue').textContent = `${formatNumber(data.metrics.cost)} усл. ед.`;
+      document.getElementById('rowsValue').textContent = `${formatNumber(data.metrics.rows)} строк`;
+      document.getElementById('cacheValue').textContent = `${(data.metrics.cache_hit_ratio * 100).toFixed(2)}%`;
+      document.getElementById('indexValue').textContent = `${(data.metrics.index_usage * 100).toFixed(2)}%`;
+      
+      // Дополнительные метрики
+      document.getElementById('waitTimeValue').textContent = `${formatNumber(data.metrics.wait_time)} мс`;
+      document.getElementById('ioReadValue').textContent = `${formatNumber(data.metrics.disk_io_read)} блоков`;
+      document.getElementById('dbSizeValue').textContent = formatDatabaseSize(data.metrics.database_size);
+      document.getElementById('connectionsValue').textContent = formatNumber(data.metrics.active_connections);
+      document.getElementById('uptimeValue').textContent = formatUptime(data.metrics.uptime);
+      document.getElementById('replicationLagValue').textContent = `${formatNumber(data.metrics.replication_lag)} мс`;
+      
+      // Информация о блокировках
+      document.getElementById('totalLocksValue').textContent = formatNumber(data.locks.lock_stats.total_locks);
+      document.getElementById('blockedCountValue').textContent = formatNumber(data.locks.lock_stats.blocked_count);
+      document.getElementById('longLocksValue').textContent = formatNumber(data.locks.long_locks.length);
+      document.getElementById('deadlocksValue').textContent = formatNumber(data.locks.deadlocks.length);
+      
+      // Заблокированные таблицы
+      const blockedTablesContainer = document.getElementById('blockedTablesContainer');
+      blockedTablesContainer.innerHTML = '';
+      
+      if (data.locks.lock_stats.blocked_tables && Object.keys(data.locks.lock_stats.blocked_tables).length > 0) {
+        const tableEl = document.createElement('table');
+        tableEl.style.width = '100%';
+        tableEl.style.borderCollapse = 'collapse';
+        tableEl.style.marginTop = '10px';
+        
+        let tableHTML = `
+          <tr>
+            <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">Таблица</th>
+            <th style="text-align: left; padding: 10px; border-bottom: 1px solid #ddd;">Количество блокировок</th>
+          </tr>
+        `;
+        
+        for (const [table, count] of Object.entries(data.locks.lock_stats.blocked_tables)) {
+          tableHTML += `
+            <tr>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${table}</td>
+              <td style="padding: 10px; border-bottom: 1px solid #ddd;">${formatNumber(count)}</td>
+            </tr>
+          `;
+        }
+        
+        tableEl.innerHTML = tableHTML;
+        blockedTablesContainer.appendChild(tableEl);
+      } else {
+        blockedTablesContainer.innerHTML = '<p>Заблокированные таблицы не обнаружены.</p>';
+      }
+      
+      // Отображаем рекомендации
+      const adviceContainer = document.getElementById('adviceContainer');
+      adviceContainer.innerHTML = '';
+      
+      if (data.advice && data.advice.length > 0) {
+        data.advice.forEach(advice => {
+          const adviceItem = document.createElement('div');
+          adviceItem.className = `advice-item ${advice.priority}`;
+          
+          const priorityClass = `priority-${advice.priority}`;
+          
+          let adviceHTML = `
+            <span class="advice-priority ${priorityClass}">${advice.priority.toUpperCase()}</span>
+            <strong>${advice.issue}</strong>
+            <p>${advice.recommendation}</p>
+          `;
+          
+          if (advice.fix_ddl) {
+            adviceHTML += `<code>${advice.fix_ddl}</code>`;
+          }
+          
+          adviceItem.innerHTML = adviceHTML;
+          adviceContainer.appendChild(adviceItem);
+        });
+      } else {
+        adviceContainer.innerHTML = '<p>Рекомендации не найдены.</p>';
+      }
+      
+      // Добавляем цветовое кодирование для важных метрик
+      colorCodeMetrics(data);
+    }
+
+    // Функция для цветового кодирования метрик
+    function colorCodeMetrics(data) {
+      // Кэш хит ratio - чем выше, тем лучше
+      const cacheElement = document.getElementById('cacheValue');
+      cacheElement.classList.remove('good', 'medium', 'bad');
+      if (data.metrics.cache_hit_ratio > 0.9) {
+        cacheElement.classList.add('good');
+      } else if (data.metrics.cache_hit_ratio > 0.7) {
+        cacheElement.classList.add('medium');
+      } else {
+        cacheElement.classList.add('bad');
+      }
+      
+      // Использование индексов - чем выше, тем лучше
+      const indexElement = document.getElementById('indexValue');
+      indexElement.classList.remove('good', 'medium', 'bad');
+      if (data.metrics.index_usage > 0.8) {
+        indexElement.classList.add('good');
+      } else if (data.metrics.index_usage > 0.5) {
+        indexElement.classList.add('medium');
+      } else {
+        indexElement.classList.add('bad');
+      }
+      
+      // Блокировки - чем меньше, тем лучше
+      const blockedElement = document.getElementById('blockedCountValue');
+      blockedElement.classList.remove('good', 'bad');
+      if (data.locks.lock_stats.blocked_count === 0) {
+        blockedElement.classList.add('good');
+      } else {
+        blockedElement.classList.add('bad');
+      }
+    }
+
+    // Функция для показа статуса
+    function showStatus(message, type) {
+      statusMessage.textContent = message;
+      statusMessage.className = `status-message status-${type}`;
+      statusMessage.classList.remove('hidden');
+    }
+
+    // Функция для скрытия статуса
+    function hideStatus() {
+      statusMessage.classList.add('hidden');
+    }
+
+    // Обработчик нажатия кнопки анализа
+    analyzeBtn.addEventListener('click', async () => {
+      const query = sqlQuery.value.trim();
+      if (!query) {
+        showStatus('Пожалуйста, введите SQL-запрос для анализа', 'error');
+        return;
+      }
+
+      // Показываем статус загрузки
+      showStatus('Анализ запроса...', 'loading');
+      analyzeBtn.disabled = true;
+      analyzeBtn.innerHTML = '<div class="loading"></div> Обработка...';
+
+      try {
+        // Отправляем запрос на сервер
+        const res = await fetch('http://192.168.1.47:8000/analyze', {
+          method: 'POST',
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ query })
+        });
+
+        if (!res.ok) {
+          throw new Error(`Ошибка сервера: ${res.status}`);
+        }
+
+        const data = await res.json();
+        
+        // Отображаем полученные данные
+        displayData(data);
+        showStatus('Анализ завершен успешно', 'success');
+        
+      } catch (error) {
+        console.error('Ошибка при анализе запроса:', error);
+        showStatus(`Ошибка: ${error.message}`, 'error');
+      } finally {
+        // Восстанавливаем кнопку
+        analyzeBtn.disabled = false;
+        analyzeBtn.innerHTML = 'Анализировать запрос';
+        
+        // Скрываем статус через несколько секунд
+        setTimeout(() => {
+          hideStatus();
+        }, 5000);
+      }
+    });
+
+    // Инициализация при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+      // Скрываем результаты анализа при загрузке
+      analysisResult.classList.add('hidden');
+      hideStatus();
+    });
+  </script>
+</body>
+</html>

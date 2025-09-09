@@ -1,0 +1,80 @@
+[
+  {
+    "date": "2025-09-08T16:30:00.123456",
+    "query": "SELECT * FROM big_table",
+    "advice": [
+      {
+        "issue": "Seq Scan на большой таблице",
+        "recommendation": "Рассмотрите создание индекса. Seq Scan на больших таблицах медленный.",
+        "priority": "high",
+        "metrics": {
+          "cost": 1234.56,
+          "rows": 50000,
+          "width": 32
+        },
+        "fix_ddl": "CREATE INDEX IF NOT EXISTS idx_big_table_col1 ON big_table (col1);"
+      }
+    ],
+    "metrics": {
+      "cost": 1234.56,
+      "rows": 50000,
+      "cache_hit_ratio": 0.95,
+      "index_usage": 0.1,
+      "wait_time": 0,
+      "disk_io_read": 100,
+      "disk_io_write": 10,
+      "database_size": 123456789,
+      "deadlock_count": 0,
+      "uptime": 123456.7,
+      "active_connections": 5,
+      "lock_contention": 0,
+      "replication_lag": 0,
+      "query_execution_frequency": {
+        "SELECT * FROM big_table": 10
+      }
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 2,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-08T16:35:00.654321",
+    "query": "SELECT * FROM small_table WHERE id = 1",
+    "advice": [],
+    "metrics": {
+      "cost": 1.23,
+      "rows": 1,
+      "cache_hit_ratio": 0.99,
+      "index_usage": 0.9,
+      "wait_time": 0,
+      "disk_io_read": 1,
+      "disk_io_write": 0,
+      "database_size": 123456789,
+      "deadlock_count": 0,
+      "uptime": 123456.7,
+      "active_connections": 5,
+      "lock_contention": 0,
+      "replication_lag": 0,
+      "query_execution_frequency": {
+        "SELECT * FROM small_table WHERE id = 1": 5
+      }
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 1,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  }
+]

@@ -1,0 +1,73 @@
+- name: Seq Scan на большой таблице
+  match:
+    node_type: Seq Scan
+    plan_rows_gt: 10000
+  recommendation: Рассмотрите создание индекса. Seq Scan на больших таблицах медленный.
+  fix_ddl: "CREATE INDEX IF NOT EXISTS idx_{relation}_{column} ON {relation} ({column});"
+  priority: high
+
+- name: Seq Scan без фильтра
+  match:
+    node_type: Seq Scan
+    filter_absent: true
+  recommendation: Seq Scan без WHERE сканирует всю таблицу.
+  fix_ddl: ""
+  priority: high
+
+- name: Nested Loop с большим числом строк
+  match:
+    node_type: Nested Loop
+    plan_rows_gt: 1000
+  recommendation: Nested Loop обрабатывает много строк. Попробуйте Hash / Merge Join или индексы.
+  fix_ddl: ""
+  priority: high
+
+- name: Hash Join
+  match:
+    node_type: Hash Join
+  recommendation: Hash Join может быть неэффективен без индекса на колонках join-а.
+  fix_ddl: "CREATE INDEX IF NOT EXISTS idx_{relation}_{join_column} ON {relation} ({join_column});"
+  priority: medium
+
+- name: Высокая стоимость
+  match:
+    total_cost_gt: 1000
+  recommendation: Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.
+  fix_ddl: ""
+  priority: medium
+
+- name: Много строк
+  match:
+    plan_rows_gt: 100000
+  recommendation: Запрос возвращает очень много строк. Добавьте фильтры/пагинацию.
+  fix_ddl: ""
+  priority: medium
+
+- name: Bitmap Heap Scan
+  match:
+    node_type: Bitmap Heap Scan
+  recommendation: Bitmap Heap Scan часто говорит о том, что индекс можно улучшить.
+  fix_ddl: "REINDEX TABLE {relation};"
+  priority: low
+
+- name: Materialize
+  match:
+    node_type: Materialize
+  recommendation: Materialize может расходовать много памяти.
+  fix_ddl: "SET work_mem = '128MB';"
+  priority: low
+
+- name: Sort
+  match:
+    node_type: Sort
+  recommendation: Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.
+  fix_ddl: "CREATE INDEX IF NOT EXISTS idx_{relation}_{sort_column} ON {relation} ({sort_column});"
+  priority: medium
+
+- name: Update/Delete без фильтра
+  match:
+    node_type_in: [Update, Delete]
+    filter_absent: true
+  recommendation: '{node_type} без WHERE может заблокировать всю таблицу!'
+  fix_ddl: ""
+  priority: high
