@@ -89,8 +89,13 @@ def get_history():
     return {"history": load_history()}
 
 @hacaton.get("/dbinfo")
-def get_db_info(connection: DBConnectionParams = Depends(DBConnectionParams)):
-    conn = get_conn(connection)
+def get_db_info():
+    global DEFAULT_CONNECTION_PARAMS
+    if DEFAULT_CONNECTION_PARAMS:
+        params = DBConnectionParams(**DEFAULT_CONNECTION_PARAMS)
+    else:
+        params = DBConnectionParams()
+    conn = get_conn(params)
     try:
         with conn.cursor() as cur:
             cur.execute("SELECT current_database();")

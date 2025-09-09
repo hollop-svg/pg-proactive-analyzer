@@ -1,5 +1,1886 @@
 [
   {
+    "date": "2025-09-09T18:15:16.936004",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.995105430794662,
+      "index_usage": 0.7311320754716981,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 4278.85457,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T18:14:30.832912",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9950239579618722,
+      "index_usage": 0.7106598984771574,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 4232.751649,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T18:14:05.121738",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9949421935215081,
+      "index_usage": 0.6868131868131868,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 4207.034396,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T18:13:56.572399",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9948583069683917,
+      "index_usage": 0.6586826347305389,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 4198.486896,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T18:12:09.654831",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9947551918848043,
+      "index_usage": 0.625,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 4091.570081,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T18:11:27.396698",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9946588999269669,
+      "index_usage": 0.583941605839416,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 4049.313158,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T18:11:03.987601",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.994561175574571,
+      "index_usage": 0.5327868852459017,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 4025.896213,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T17:50:09.668741",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9934647207971533,
+      "index_usage": 0.4672897196261682,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 2771.586626,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T17:49:52.091679",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9933220016392451,
+      "index_usage": 0.3804347826086957,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 2754.010685,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T17:49:33.291871",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9931739079096077,
+      "index_usage": 0.2597402597402597,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 2735.203393,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
+    "date": "2025-09-09T17:45:57.227246",
+    "query": "SELECT \n    u.user_id,\n    u.username,\n    u.email,\n    a.city,\n    a.country,\n    o.order_id,\n    o.order_date,\n    o.status,\n    o.total_amount,\n    c.name AS company_name,\n    j.job_name,\n    j.salary\nFROM users u\nLEFT JOIN addresses a \n    ON a.user_id = u.user_id AND a.is_default = TRUE\nLEFT JOIN orders o \n    ON o.user_id = u.user_id\nLEFT JOIN job j \n    ON j.user_id = u.user_id\nLEFT JOIN company c \n    ON c.company_id = j.company_id\nORDER BY o.order_date DESC NULLS LAST;",
+    "advice": [
+      {
+        "issue": "Высокая стоимость",
+        "recommendation": "Высокая стоимость выполнения. Оптимизируйте запрос/таблицу.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Sort",
+        "recommendation": "Сортировка без индекса может быть медленной. Добавьте индекс по сортируемому полю.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Hash Join",
+        "recommendation": "Hash Join может быть неэффективен без индекса на колонках join-а.",
+        "priority": "medium",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      },
+      {
+        "issue": "Seq Scan без фильтра",
+        "recommendation": "Seq Scan без WHERE сканирует всю таблицу.",
+        "priority": "high",
+        "metrics": {
+          "cost": 4878.33,
+          "rows": 18131,
+          "width": 324,
+          "startup_cost": 4833.0,
+          "actual_time": null,
+          "actual_rows": null
+        },
+        "fix_ddl": null
+      }
+    ],
+    "metrics": {
+      "cost": 4878.33,
+      "rows": 18131,
+      "cache_hit_ratio": 0.9929559076956999,
+      "index_usage": 0.08064516129032258,
+      "wait_time": 9,
+      "disk_io_read": 1214.0,
+      "disk_io_write": null,
+      "database_size": 19016851,
+      "deadlock_count": 0.0,
+      "uptime": 2519.129491,
+      "active_connections": 1,
+      "lock_contention": 0,
+      "replication_lag": 0.0
+    },
+    "locks": {
+      "lock_stats": {
+        "total_locks": 51,
+        "blocked_count": 0,
+        "blocked_tables": {}
+      },
+      "blocked_processes": [],
+      "long_locks": [],
+      "deadlocks": []
+    }
+  },
+  {
     "date": "2025-09-08T16:30:00.123456",
     "query": "SELECT * FROM big_table",
     "advice": [

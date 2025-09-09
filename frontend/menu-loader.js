@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <li><a href="index.html">Анализ запроса</a></li>
         <li><a href="history.html">История</a></li>
         <li><a href="info_BD.html">Информация о базе данных</a></li>
+         <li><a href="heatmap.html">Аналитика</a></li>
       </ul>
     </nav>
   `;

@@ -64,7 +64,7 @@
         document.getElementById('db-content').style.display = 'none';
 
         // Запрос к API для получения данных о БД
-        const response = await fetch("http://192.168.1.47:8000/dbinfo");
+        const response = await fetch("http://localhost:8000/dbinfo");
         
         if (!response.ok) {
           throw new Error(`Ошибка API: ${response.status}`);
@@ -122,21 +122,21 @@
               <i class="fas fa-weight-hanging"></i>
             </div>
             <h3>Размер БД</h3>
-            <p>${formatBytes(data.dbsize_bytes)}</p>
+            <p>${formatBytes(data.dbsize)}</p>
           </div>
           <div class="stat">
             <div class="stat-icon table-icon">
               <i class="fas fa-table"></i>
             </div>
             <h3>Количество таблиц</h3>
-            <p>${data.table_count}</p>
+            <p>${data.tables_count}</p>
           </div>
           <div class="stat">
             <div class="stat-icon user-icon">
               <i class="fas fa-users"></i>
             </div>
             <h3>Пользователей</h3>
-            <p>${data.user_count}</p>
+            <p>${data.users_count}</p>
           </div>
         `;
 
@@ -148,20 +148,26 @@
           const row = document.createElement("tr");
           
           row.innerHTML = `
-            <td>${tbl.name}</td>
-            <td class="size-bytes">${formatBytes(tbl.size_bytes)}</td>
-            <td>
-              <div class="indexes-list">
-                ${tbl.indexes && tbl.indexes.length ? 
-                  tbl.indexes.map(index => `<span class="index-tag">${index}</span>`).join('') : 
-                  "-"}
-              </div>
-            </td>
-            <td class="last-updates">
-              <div class="update-item"><strong>Автовакуум:</strong> ${formatDate(tbl.last_update.last_autovacuum)}</div>
-              <div class="update-item"><strong>Автоанализ:</strong> ${formatDate(tbl.last_update.last_autoanalyze)}</div>           
-            </td>
-          `;
+  <td>${tbl.name}</td>
+  <td class="size-bytes">${formatBytes(tbl.size)}</td>
+  <td>
+    <div class="indexes-list">
+      ${tbl.indexes && tbl.indexes.length
+        ? tbl.indexes
+              .map(idx =>
+                 `<span class="index-tag" title="${idx.def}">${idx.name}</span>`)
+              .join('')
+        : '-'}
+    </div>
+  </td>
+  <td class="last-updates">
+    <div class="update-item">
+      <strong>Последнее обновление:</strong> ${formatDate(tbl.last_update)}
+    </div>
+  </td>
+`;
+
+
           tbody.appendChild(row);
         });
 

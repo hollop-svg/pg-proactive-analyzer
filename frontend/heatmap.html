@@ -65,9 +65,11 @@
   </div>
   <script>
     document.addEventListener("DOMContentLoaded", async () => {
-      const res = await fetch("http://192.168.1.47:8000/heatmap");
+      // Запрос к API
+      const res = await fetch("http://localhost:8000/heatmap");
       const data = await res.json();
 
+      // Сводная статистика
       const totalIssues = Object.values(data.issues).reduce((a,b)=>a+b,0);
       const topTable = Object.entries(data.by_table).sort((a,b)=>b[1]-a[1])[0];
       const topHour = Object.entries(data.by_hour).sort((a,b)=>b[1]-a[1])[0];
@@ -90,6 +92,7 @@
         </div>
       `;
 
+      // Заполнение фильтров
       const tableFilter = document.getElementById("tableFilter");
       Object.keys(data.by_table).forEach(tbl => {
         const opt = document.createElement("option");

@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>SQL Guardian - Query Analyzer</title>
+  <title>Анализатор запросов SQL</title>
   <style>
     * {
       margin: 0;
@@ -374,8 +374,8 @@
 
     <div class="main">
       <header>
-        <h1>SQL Query Analyzer</h1>
-        <p>Analyze and optimize your PostgreSQL queries before execution</p>
+        <h1>Анализатор SQL-запросов</h1>
+        <p>Анализируйте и оптимизируйте ваши запросы PostgreSQL перед выполнением</p>
       </header>
 
       <section class="db-connect">
@@ -523,7 +523,7 @@
       e.preventDefault();
       const formData = Object.fromEntries(new FormData(form));
       try {
-        const res = await fetch("http://192.168.1.47:8000/check_connection", {
+        const res = await fetch("http://localhost:8000/check_connection", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData)
@@ -737,7 +737,7 @@
 
       try {
         // Отправляем запрос на сервер
-        const res = await fetch('http://192.168.1.47:8000/analyze', {
+        const res = await fetch('http://localhost:8000/analyze', {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json'
